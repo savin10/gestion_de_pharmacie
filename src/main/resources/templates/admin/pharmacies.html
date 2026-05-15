@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Pharmacies - PharmaBénin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #00b09b 0%, #96c93d 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center space-x-3 mb-4 md:mb-0">
+                    <i class="fas fa-hospital text-3xl"></i>
+                    <h1 class="text-2xl font-bold">Gestion des Pharmacies</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="/admin/dashboard" class="hover:opacity-80 transition">
+                        <i class="fas fa-home mr-2"></i>Dashboard
+                    </a>
+                    <a href="/admin/logout" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg font-semibold">
+                        <i class="fas fa-sign-out-alt mr-2"></i>Déconnexion
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-10">
+        <!-- Top Section -->
+        <div class="flex flex-col md:flex-row justify-between items-center mb-10">
+            <div>
+                <h2 class="text-3xl font-bold text-gray-900">Pharmacies</h2>
+                <p class="text-gray-600 mt-2">Gérez la liste complète des pharmacies</p>
+            </div>
+            <a href="/admin/pharmacies/add" class="mt-4 md:mt-0 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition">
+                <i class="fas fa-plus mr-2"></i>Ajouter Pharmacie
+            </a>
+        </div>
+
+        <!-- Table des Pharmacies -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-gray-100 border-b">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">ID</th>
+                            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Nom</th>
+                            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Adresse</th>
+                            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Téléphone</th>
+                            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Horaires</th>
+                            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="pharma : ${pharmacies}" class="border-b hover:bg-gray-50 transition">
+                            <td class="px-6 py-3 text-sm text-gray-700" th:text="${pharma.id}"></td>
+                            <td class="px-6 py-3 text-sm font-semibold text-gray-800" th:text="${pharma.nom}"></td>
+                            <td class="px-6 py-3 text-sm text-gray-600" th:text="${pharma.adresse}"></td>
+                            <td class="px-6 py-3 text-sm text-gray-600" th:text="${pharma.telephone}"></td>
+                            <td class="px-6 py-3 text-sm">
+                                <span th:if="${pharma.horaires.contains('24h')}" class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-semibold">
+                                    <i class="fas fa-moon mr-1"></i>24h/24
+                                </span>
+                                <span th:unless="${pharma.horaires.contains('24h')}" class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-semibold" th:text="${pharma.horaires}"></span>
+                            </td>
+                            <td class="px-6 py-3 text-sm space-x-2">
+                                <a th:href="@{/admin/pharmacies/edit/{id}(id=${pharma.id})}" class="inline-block bg-blue-50 text-blue-700 px-3 py-1 rounded hover:bg-blue-600 hover:text-white transition">
+                                    <i class="fas fa-edit"></i> Modifier
+                                </a>
+                                <a th:href="@{/admin/pharmacies/delete/{id}(id=${pharma.id})}" class="inline-block bg-red-50 text-red-700 px-3 py-1 rounded hover:bg-red-600 hover:text-white transition" onclick="return confirm('Êtes-vous sûr?')">
+                                    <i class="fas fa-trash"></i> Supprimer
+                                </a>
+                            </td>
+                        </tr>
+                        <tr th:if="${pharmacies.isEmpty()}">
+                            <td colspan="6" class="px-6 py-10 text-center text-gray-500">
+                                <i class="fas fa-inbox text-3xl mb-2"></i>
+                                <p>Aucune pharmacie trouvée</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6 mt-20">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2026 PharmaBénin - Tous droits réservés.</p>
+        </div>
+    </footer>
+</body>
+</html>
+

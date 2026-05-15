@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${medicament.nom} + ' - PharmaBenin'">Médicament - PharmaBenin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="bg-gray-50 font-sans">
+
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200 shadow-sm">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <h1 class="text-2xl font-bold text-blue-900">PharmaBenin</h1>
+                </div>
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-gray-600 hover:text-blue-900 transition-colors">Recherche</a>
+                    <a href="/pharmacies" class="text-blue-900 font-semibold border-b-2 border-blue-900 pb-1">Pharmacies</a>
+                    <a href="#" class="text-gray-600 hover:text-blue-900 transition-colors">Tableau de Bord</a>
+                </nav>
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-600 hover:text-blue-900">
+                        <i class="fas fa-bell text-xl"></i>
+                    </button>
+                    <button class="text-gray-600 hover:text-blue-900">
+                        <i class="fas fa-user-circle text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="bg-white border-b border-gray-200">
+        <div class="container mx-auto px-4 py-3">
+            <nav class="flex items-center space-x-2 text-sm text-gray-600">
+                <a href="/" class="hover:text-blue-900">ACCUEIL</a>
+                <i class="fas fa-chevron-right text-xs"></i>
+                <a href="#" class="hover:text-blue-900 uppercase" th:text="${medicament.forme}">ANTIBIOTIQUES</a>
+                <i class="fas fa-chevron-right text-xs"></i>
+                <span class="text-blue-900 font-semibold uppercase" th:text="${medicament.nom} + ' ' + ${medicament.dosage}">AMOXICILLINE 500MG</span>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- Left Column - Medicament Details -->
+            <div class="lg:col-span-2">
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+                    
+                    <!-- Medicament Header -->
+                    <div class="flex items-start gap-6 mb-8">
+                        <!-- Image placeholder -->
+                        <div class="w-48 h-48 bg-gradient-to-br from-blue-100 to-purple-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-pills text-6xl text-blue-600"></i>
+                        </div>
+                        
+                        <div class="flex-1">
+                            <div class="flex items-start justify-between mb-4">
+                                <div>
+                                    <h1 class="text-3xl font-bold text-gray-900 mb-2" th:text="${medicament.nom}">Amoxicilline 500mg</h1>
+                                    <p class="text-gray-600" th:text="${medicament.forme} + ' - Boîte de 21'">Gélules - Boîte de 21</p>
+                                </div>
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-green-100 text-green-800">
+                                    <i class="fas fa-check-circle mr-1"></i> En Stock
+                                </span>
+                            </div>
+                            
+                            <!-- Info Cards -->
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="border border-gray-200 rounded-lg p-4">
+                                    <p class="text-xs text-gray-500 uppercase mb-1">Principe Actif</p>
+                                    <p class="font-semibold text-gray-900" th:text="${medicament.principeActif}">Amoxicilline Trihydratée</p>
+                                </div>
+                                <div class="border border-gray-200 rounded-lg p-4">
+                                    <p class="text-xs text-gray-500 uppercase mb-1">Classe</p>
+                                    <p class="font-semibold text-gray-900">Antibiotique Pénicilline</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Description -->
+                    <div class="mb-8">
+                        <h2 class="text-xl font-bold text-gray-900 mb-4">Description</h2>
+                        <p class="text-gray-700 leading-relaxed" th:text="${medicament.description}">
+                            L'Amoxicilline est un antibiotique de la famille des bêta-lactamines, du groupe des pénicillines de type A. 
+                            Elle est indiquée dans le traitement des infections bactériennes à germes sensibles.
+                        </p>
+                    </div>
+                    
+                    <!-- Alternatives -->
+                    <div th:if="${alternatives != null and !alternatives.isEmpty()}">
+                        <h2 class="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                            <i class="fas fa-exchange-alt mr-2 text-blue-900"></i>
+                            Alternatives Similaires
+                        </h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div th:each="alt : ${alternatives}" class="border border-gray-200 rounded-lg p-4 hover:border-blue-900 transition-colors cursor-pointer">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-capsules text-2xl text-gray-400 mr-3"></i>
+                                        <div>
+                                            <p class="font-semibold text-gray-900" th:text="${alt.nom} + ' ' + ${alt.dosage}">Médicament</p>
+                                            <p class="text-xs text-gray-500" th:text="${alt.forme}">Forme</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <a th:href="@{/medicament/{mid}/pharmacie/{pid}(mid=${alt.id}, pid=${pharmacie.id})}" class="text-xs text-blue-900 hover:underline">Détails</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Column - Pharmacy Info -->
+            <div class="lg:col-span-1">
+                <!-- Pharmacy Card -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden sticky top-4" th:if="${pharmacie != null}">
+                    <!-- Pharmacy Image -->
+                    <div class="relative h-48 bg-gradient-to-br from-green-600 to-green-800">
+                        <div class="absolute top-4 right-4">
+                            <span class="bg-red-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                                Ouvert 24h/24
+                            </span>
+                        </div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <i class="fas fa-hospital text-white text-6xl opacity-20"></i>
+                        </div>
+                    </div>
+                    
+                    <!-- Pharmacy Details -->
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-4" th:text="${pharmacie.nom}">Pharmacie Saint-Côme</h3>
+                        
+                        <div class="space-y-3 mb-6">
+                            <div class="flex items-start">
+                                <i class="fas fa-map-marker-alt text-gray-400 mt-1 mr-3"></i>
+                                <p class="text-sm text-gray-700" th:text="${pharmacie.adresse}">Avenue Steinmetz, Zone Résidentielle, Cotonou, Bénin</p>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-phone text-gray-400 mr-3"></i>
+                                <a th:href="'tel:' + ${pharmacie.telephone}" class="text-sm text-blue-900 font-semibold hover:underline" th:text="${pharmacie.telephone}">+229 21 31 45 78</a>
+                            </div>
+                        </div>
+                        
+                        <!-- Map placeholder -->
+                        <div class="h-48 bg-gray-200 rounded-lg mb-4 relative overflow-hidden">
+                            <div id="pharmacyMap" class="w-full h-full"></div>
+                        </div>
+                        
+                        <!-- Action Buttons -->
+                        <div class="space-y-3">
+                            <button class="w-full bg-blue-900 text-white py-3 rounded-lg font-semibold hover:bg-blue-800 transition-colors flex items-center justify-center">
+                                <i class="fas fa-phone mr-2"></i>
+                                Appeler pour réserver
+                            </button>
+                            <button class="w-full border-2 border-blue-900 text-blue-900 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors flex items-center justify-center">
+                                <i class="fas fa-directions mr-2"></i>
+                                Obtenir l'itinéraire
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Other Nearby Pharmacies -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 mt-6" th:if="${autresPharmacies != null and !autresPharmacies.isEmpty()}">
+                    <h3 class="text-lg font-bold text-gray-900 mb-4">Autres Pharmacies Proches</h3>
+                    <div class="space-y-3">
+                        <div th:each="autre : ${autresPharmacies}" class="border-b border-gray-200 pb-3 last:border-b-0 last:pb-0 cursor-pointer hover:bg-gray-50 transition-colors" th:onclick="'window.location.href=\'/medicament/' + ${medicament.id} + '/pharmacie/' + ${autre.pharmacie.id} + '\''">
+                            <div class="flex justify-between items-start">
+                                <div class="flex-1">
+                                    <p class="font-semibold text-gray-900" th:text="${autre.pharmacie.nom}">Pharmacie de l'Étoile</p>
+                                    <p class="text-xs text-gray-500">
+                                        <span th:text="${#numbers.formatDecimal(autre.distance, 1, 1)}">0.8</span> km • 
+                                        <span th:text="${autre.pharmacie.horaires}">Ouvert</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 py-8 mt-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center text-sm text-gray-600">
+                <div class="mb-4 md:mb-0">
+                    <p class="font-semibold text-blue-900 text-lg mb-2">PharmaBenin</p>
+                    <p>&copy; 2024 PharmaBenin - Système National de Gestion Pharmaceutique du Bénin</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="hover:text-blue-900 transition-colors">Mentions Légales</a>
+                    <a href="#" class="hover:text-blue-900 transition-colors">Contact</a>
+                    <a href="#" class="hover:text-blue-900 transition-colors">Aide</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Fonction callback pour Google Maps
+        function initGoogleMaps() {
+            try {
+                const pharmacyMapDiv = document.getElementById('pharmacyMap');
+                if (!pharmacyMapDiv) return;
+                
+                const pharmacyLat = parseFloat(pharmacyMapDiv.dataset.lat || 6.3667);
+                const pharmacyLng = parseFloat(pharmacyMapDiv.dataset.lng || 2.4333);
+                
+                const map = new google.maps.Map(pharmacyMapDiv, {
+                    zoom: 15,
+                    center: { lat: pharmacyLat, lng: pharmacyLng },
+                    styles: [
+                        {
+                            featureType: 'poi',
+                            elementType: 'labels',
+                            stylers: [{ visibility: 'off' }]
+                        }
+                    ]
+                });
+
+                new google.maps.Marker({
+                    position: { lat: pharmacyLat, lng: pharmacyLng },
+                    map: map,
+                    icon: {
+                        path: google.maps.SymbolPath.CIRCLE,
+                        scale: 10,
+                        fillColor: '#16a34a',
+                        fillOpacity: 1,
+                        strokeColor: '#ffffff',
+                        strokeWeight: 2
+                    }
+                });
+            } catch (error) {
+                console.error('Error initializing pharmacy map:', error);
+                showPharmacyMapFallback();
+            }
+        }
+        
+        function showPharmacyMapFallback() {
+            const mapDiv = document.getElementById('pharmacyMap');
+            if (!mapDiv) return;
+            
+            const lat = mapDiv.dataset.lat || 6.3667;
+            const lng = mapDiv.dataset.lng || 2.4333;
+            
+            mapDiv.innerHTML = `
+                <div class="h-full flex flex-col items-center justify-center bg-gradient-to-br from-green-50 to-green-100 text-gray-700 p-4">
+                    <i class="fas fa-map-marker-alt text-4xl mb-3 text-green-600"></i>
+                    <p class="font-semibold text-sm mb-2">Carte indisponible</p>
+                    <a href="https://www.google.com/maps?q=${lat},${lng}" 
+                       target="_blank"
+                       class="bg-green-700 text-white px-4 py-2 rounded-lg text-xs font-semibold hover:bg-green-600 transition-colors flex items-center mt-2">
+                        <i class="fas fa-external-link-alt mr-2"></i>
+                        Voir sur Google Maps
+                    </a>
+                </div>
+            `;
+        }
+        
+        // Gérer l'erreur d'authentification Google Maps
+        window.gm_authFailure = function() {
+            console.error('Google Maps authentication failed');
+            showPharmacyMapFallback();
+        };
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXSY8q4e-uU7V4zf9ORzGfvH0lgr4Sl4U&libraries=places,geometry&callback=initGoogleMaps"></script>
+    
+    <script th:if="${pharmacie != null}">
+        document.getElementById('pharmacyMap').dataset.lat = /*[[${pharmacie.latitude}]]*/ '6.3667';
+        document.getElementById('pharmacyMap').dataset.lng = /*[[${pharmacie.longitude}]]*/ '2.4333';
+    </script>
+</body>
+</html>

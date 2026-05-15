@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin - PharmaBénin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #00b09b 0%, #96c93d 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center space-x-3 mb-4 md:mb-0">
+                    <i class="fas fa-hand-holding-medical text-4xl"></i>
+                    <div>
+                        <h1 class="text-2xl font-bold">PharmaBénin Admin</h1>
+                        <p class="text-sm opacity-90">Gestion de l'application</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span class="text-sm">Bienvenue, <strong th:text="${user.username}"></strong></span>
+                    <a href="/admin/logout" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg font-semibold">
+                        <i class="fas fa-sign-out-alt mr-2"></i>Déconnexion
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-10">
+        <!-- Page Title -->
+        <div class="mb-10">
+            <h2 class="text-3xl font-extrabold text-gray-900">
+                <i class="fas fa-chart-bar text-green-600 mr-2"></i>Tableau de Bord
+            </h2>
+            <p class="text-gray-600 mt-2">Gérez les médicaments et les pharmacies</p>
+        </div>
+
+        <!-- Statistics -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+            <!-- Medicaments Card -->
+            <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-blue-600">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-600 font-semibold">Total Médicaments</p>
+                        <p class="text-4xl font-bold text-blue-600 mt-2" th:text="${totalMedicaments}">0</p>
+                    </div>
+                    <i class="fas fa-pills text-5xl text-blue-100"></i>
+                </div>
+                <a href="/admin/medicaments" class="mt-4 inline-block text-blue-600 hover:text-blue-800 font-semibold">
+                    Voir les détails <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+
+            <!-- Pharmacies Card -->
+            <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-green-600">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-600 font-semibold">Total Pharmacies</p>
+                        <p class="text-4xl font-bold text-green-600 mt-2" th:text="${totalPharmacies}">0</p>
+                    </div>
+                    <i class="fas fa-hospital text-5xl text-green-100"></i>
+                </div>
+                <a href="/admin/pharmacies" class="mt-4 inline-block text-green-600 hover:text-green-800 font-semibold">
+                    Voir les détails <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+
+            <!-- Access Public Card -->
+            <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-purple-600">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-600 font-semibold">Application Publique</p>
+                        <p class="text-sm text-gray-500 mt-2">Accédez à la version publique</p>
+                    </div>
+                    <i class="fas fa-globe text-5xl text-purple-100"></i>
+                </div>
+                <a href="/" class="mt-4 inline-block text-purple-600 hover:text-purple-800 font-semibold">
+                    Accéder <i class="fas fa-external-link-alt ml-2"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="bg-white rounded-xl shadow-md p-8 mb-10">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6">
+                <i class="fas fa-bolt text-yellow-600 mr-2"></i>Actions Rapides
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- Add Medicament -->
+                <a href="/admin/medicaments/add" class="group">
+                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-6 hover:shadow-lg transition-shadow cursor-pointer">
+                        <i class="fas fa-plus text-3xl text-blue-600 mb-2"></i>
+                        <p class="font-semibold text-gray-800">Ajouter Médicament</p>
+                        <p class="text-sm text-gray-600 mt-1">Créer un nouveau médicament</p>
+                    </div>
+                </a>
+
+                <!-- View Medicaments -->
+                <a href="/admin/medicaments" class="group">
+                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-6 hover:shadow-lg transition-shadow cursor-pointer">
+                        <i class="fas fa-list text-3xl text-blue-600 mb-2"></i>
+                        <p class="font-semibold text-gray-800">Lister Médicaments</p>
+                        <p class="text-sm text-gray-600 mt-1">Voir tous les médicaments</p>
+                    </div>
+                </a>
+
+                <!-- Add Pharmacy -->
+                <a href="/admin/pharmacies/add" class="group">
+                    <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-6 hover:shadow-lg transition-shadow cursor-pointer">
+                        <i class="fas fa-plus text-3xl text-green-600 mb-2"></i>
+                        <p class="font-semibold text-gray-800">Ajouter Pharmacie</p>
+                        <p class="text-sm text-gray-600 mt-1">Créer une nouvelle pharmacie</p>
+                    </div>
+                </a>
+
+                <!-- View Pharmacies -->
+                <a href="/admin/pharmacies" class="group">
+                    <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-6 hover:shadow-lg transition-shadow cursor-pointer">
+                        <i class="fas fa-list text-3xl text-green-600 mb-2"></i>
+                        <p class="font-semibold text-gray-800">Lister Pharmacies</p>
+                        <p class="text-sm text-gray-600 mt-1">Voir toutes les pharmacies</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- User Info -->
+        <div class="bg-white rounded-xl shadow-md p-8">
+            <h3 class="text-lg font-bold text-gray-800 mb-4">
+                <i class="fas fa-user-circle mr-2"></i>Informations de l'Utilisateur
+            </h3>
+            <div class="space-y-2 text-gray-600">
+                <p><strong>Nom d'utilisateur:</strong> <span th:text="${user.username}"></span></p>
+                <p><strong>Email:</strong> <span th:text="${user.email}"></span></p>
+                <p><strong>Compte créé:</strong> <span th:text="${#temporals.format(user.createdAt, 'dd/MM/yyyy HH:mm')}"></span></p>
+                <p><strong>Dernière connexion:</strong>
+                    <span th:if="${user.lastLoginAt}" th:text="${#temporals.format(user.lastLoginAt, 'dd/MM/yyyy HH:mm')}"></span>
+                    <span th:unless="${user.lastLoginAt}">Jamais</span>
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6 mt-20">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2026 PharmaBénin - Tous droits réservés.</p>
+        </div>
+    </footer>
+</body>
+</html>
+

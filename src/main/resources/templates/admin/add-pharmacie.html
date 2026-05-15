@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pharmacie.id} ? 'Modifier Pharmacie' : 'Ajouter Pharmacie'">Pharmacie - PharmaBénin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #00b09b 0%, #96c93d 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <h1 class="text-2xl font-bold">
+                    <i class="fas fa-hospital mr-2"></i>
+                    <span th:text="${pharmacie.id} ? 'Modifier Pharmacie' : 'Ajouter Pharmacie'"></span>
+                </h1>
+                <a href="/admin/pharmacies" class="mt-4 md:mt-0 text-white hover:opacity-80">
+                    <i class="fas fa-arrow-left mr-2"></i>Retour
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-10">
+        <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-md p-8">
+            <form th:action="@{/admin/pharmacies/save}" method="post" th:object="${pharmacie}" class="space-y-6">
+                <!-- ID (hidden) -->
+                <input type="hidden" th:field="*{id}">
+
+                <!-- Nom -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        <i class="fas fa-heading mr-2"></i>Nom de la Pharmacie *
+                    </label>
+                    <input type="text" th:field="*{nom}" required
+                           class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-green-500 focus:outline-none transition"
+                           placeholder="Ex: Pharmacie Camp Guezo">
+                </div>
+
+                <!-- Adresse -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        <i class="fas fa-map-marker-alt mr-2"></i>Adresse *
+                    </label>
+                    <input type="text" th:field="*{adresse}" required
+                           class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-green-500 focus:outline-none transition"
+                           placeholder="Ex: Cotonou, Bénin">
+                </div>
+
+                <!-- Latitude -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        <i class="fas fa-location-dot mr-2"></i>Latitude *
+                    </label>
+                    <input type="number" th:field="*{latitude}" required step="0.0001"
+                           class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-green-500 focus:outline-none transition"
+                           placeholder="Ex: 6.3619">
+                </div>
+
+                <!-- Longitude -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        <i class="fas fa-location-dot mr-2"></i>Longitude *
+                    </label>
+                    <input type="number" th:field="*{longitude}" required step="0.0001"
+                           class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-green-500 focus:outline-none transition"
+                           placeholder="Ex: 2.4244">
+                </div>
+
+                <!-- Téléphone -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        <i class="fas fa-phone mr-2"></i>Téléphone *
+                    </label>
+                    <input type="tel" th:field="*{telephone}" required
+                           class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-green-500 focus:outline-none transition"
+                           placeholder="Ex: +229 21 31 22 22">
+                </div>
+
+                <!-- Horaires -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        <i class="fas fa-clock mr-2"></i>Horaires *
+                    </label>
+                    <select th:field="*{horaires}" required class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-green-500 focus:outline-none transition">
+                        <option value="">-- Sélectionnez les horaires --</option>
+                        <option value="24h/24">24h/24</option>
+                        <option value="08h-22h">08h-22h</option>
+                        <option value="08h-18h">08h-18h</option>
+                        <option value="09h-20h">09h-20h</option>
+                        <option value="07h-21h">07h-21h</option>
+                    </select>
+                </div>
+
+                <!-- Buttons -->
+                <div class="flex justify-end space-x-4">
+                    <a href="/admin/pharmacies" class="bg-gray-400 hover:bg-gray-500 text-white px-6 py-2 rounded-lg font-semibold transition">
+                        <i class="fas fa-times mr-2"></i>Annuler
+                    </a>
+                    <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-semibold transition">
+                        <i class="fas fa-save mr-2"></i>Sauvegarder
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6 mt-20">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2026 PharmaBénin - Tous droits réservés.</p>
+        </div>
+    </footer>
+</body>
+</html>
+

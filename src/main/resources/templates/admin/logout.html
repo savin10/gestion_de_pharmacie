@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Déconnexion - PharmaBénin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans">
+    <div class="min-h-screen flex items-center justify-center">
+        <div class="text-center">
+            <div class="mb-6">
+                <i class="fas fa-spinner text-4xl text-green-600 animate-spin"></i>
+            </div>
+            <h1 class="text-2xl font-bold text-gray-900 mb-2">Déconnexion en cours...</h1>
+            <p class="text-gray-600">Vous allez être redirigé...</p>
+
+            <!-- Formulaire de déconnexion -->
+            <form method="post" action="/admin/logout" id="logoutForm" class="hidden" th:action="@{/admin/logout}">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            </form>
+
+            <script>
+                // Soumettre le formulaire au chargement
+                document.getElementById('logoutForm').submit();
+            </script>
+        </div>
+    </div>
+</body>
+</html>
+

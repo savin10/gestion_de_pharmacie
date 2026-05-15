@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmaBénin - Trouvez vos médicaments instantanément</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXSY8q4e-uU7V4zf9ORzGfvH0lgr4Sl4U&libraries=places,geometry"></script>
+</head>
+<body class="bg-gray-50 font-sans">
+
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200 shadow-sm">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <h1 class="text-2xl font-bold text-blue-900">PharmaBenin</h1>
+                </div>
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-blue-900 font-semibold border-b-2 border-blue-900 pb-1">Recherche</a>
+                    <a href="/pharmacies" class="text-gray-600 hover:text-blue-900 transition-colors">Pharmacies</a>
+                    <a href="/admin/dashboard" class="text-gray-600 hover:text-blue-900 transition-colors">Tableau de Bord</a>
+                </nav>
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-600 hover:text-blue-900">
+                        <i class="fas fa-bell text-xl"></i>
+                    </button>
+                    <button class="text-gray-600 hover:text-blue-900">
+                        <i class="fas fa-user-circle text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="bg-gradient-to-b from-blue-50 to-white">
+        
+        <!-- Hero Section with Search -->
+        <section class="container mx-auto px-4 py-16 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold text-blue-900 mb-4">
+                Trouvez vos médicaments instantanément<br>partout au Bénin.
+            </h2>
+            <p class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+                Recherchez par nom ou principe actif et localisez la pharmacie de garde la plus proche de chez vous.
+            </p>
+
+            <!-- Search Bar -->
+            <div class="max-w-2xl mx-auto mb-6 search-container">
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+                        <i class="fas fa-search text-gray-400"></i>
+                    </div>
+                    <input type="text" id="searchInput"
+                           class="w-full pl-12 pr-32 py-4 rounded-full border-2 border-gray-200 focus:border-blue-600 focus:outline-none text-base"
+                           placeholder="Nom du médicament (ex: Paracétamol...)">
+                    <button id="searchBtn" class="absolute right-2 top-1/2 -translate-y-1/2 bg-blue-900 text-white px-8 py-2.5 rounded-full font-semibold hover:bg-blue-800 transition-colors">
+                        Rechercher
+                    </button>
+                    
+                    <!-- Quick Results Dropdown -->
+                    <div id="quickResultsDropdown" class="hidden absolute left-0 right-0 top-full mt-2 bg-white rounded-2xl shadow-xl border border-gray-200 max-h-96 overflow-y-auto z-50">
+                        <div id="quickResultsList" class="divide-y divide-gray-200"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Location Button -->
+            <button id="locationBtn" class="inline-flex items-center text-blue-900 hover:text-blue-700 transition-colors">
+                <i class="fas fa-location-dot mr-2"></i>
+                <span id="locationText">Utiliser ma position actuelle</span>
+            </button>
+        </section>
+
+        <!-- Categories Section -->
+        <section class="container mx-auto px-4 py-12">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-900">Catégories de Santé</h3>
+                <a href="#" class="text-blue-900 hover:underline flex items-center">
+                    Voir tout <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+            <p class="text-gray-600 mb-8">Accès rapide aux soins essentiels</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Pediatrie Card -->
+                <div class="relative bg-gradient-to-br from-blue-600 to-blue-800 rounded-3xl p-8 text-white overflow-hidden h-64">
+                    <div class="absolute top-4 left-4 bg-green-500 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                        Populaire
+                    </div>
+                    <div class="relative z-10 h-full flex flex-col justify-end">
+                        <h4 class="text-3xl font-bold mb-2">Pédiatrie</h4>
+                        <p class="text-blue-100 text-sm">Soins et médicaments spécialisés pour la santé de vos enfants et de vos enfants...</p>
+                    </div>
+                    <div class="absolute right-0 top-0 opacity-20">
+                        <i class="fas fa-baby text-9xl"></i>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="grid grid-rows-2 gap-6">
+                    <!-- Premiers Secours -->
+                    <div class="relative bg-gradient-to-br from-green-600 to-green-800 rounded-3xl p-6 text-white overflow-hidden">
+                        <div class="relative z-10">
+                            <h4 class="text-2xl font-bold mb-2">Premiers Secours</h4>
+                            <p class="text-green-100 text-sm">L'essentiel à avoir à domicile</p>
+                        </div>
+                        <div class="absolute right-4 top-4 opacity-20">
+                            <i class="fas fa-first-aid text-6xl"></i>
+                        </div>
+                    </div>
+
+                    <!-- Maladies Chroniques -->
+                    <div class="relative bg-gradient-to-br from-gray-300 to-gray-400 rounded-3xl p-6 text-gray-800 overflow-hidden">
+                        <div class="relative z-10">
+                            <h4 class="text-2xl font-bold mb-2">Maladies Chroniques</h4>
+                            <p class="text-gray-700 text-sm">Traitements longue durée</p>
+                        </div>
+                        <div class="absolute right-4 top-4 opacity-20">
+                            <i class="fas fa-heartbeat text-6xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="container mx-auto px-4 py-16">
+            <h3 class="text-3xl font-bold text-center text-gray-900 mb-4">Comment ça marche ?</h3>
+            <p class="text-center text-gray-600 mb-12">Accédez à votre santé en 3 étapes simples</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <!-- Step 1 -->
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-search text-blue-600 text-3xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-900 mb-2">1. Recherchez</h4>
+                    <p class="text-gray-600">Saisissez le nom du médicament ou son principe actif dans notre barre de recherche intelligente qui vérifie la disponibilité automatique</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-map-marker-alt text-green-600 text-3xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-900 mb-2">2. Localisez</h4>
+                    <p class="text-gray-600">Trouvez les pharmacies les plus proches disposant du stock en temps réel sur notre carte interactive</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-shopping-bag text-red-600 text-3xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-900 mb-2">3. Récupérez</h4>
+                    <p class="text-gray-600">Rendez-vous à la pharmacie sélectionnée et récupérez votre médicament sans perte de temps</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Professional Section -->
+        <section class="container mx-auto px-4 py-12 mb-16">
+            <div class="bg-blue-900 rounded-3xl p-12 text-white text-center">
+                <h3 class="text-3xl font-bold mb-4">Professionnel de santé ?</h3>
+                <p class="text-blue-100 mb-8 max-w-2xl mx-auto">
+                    Rejoignez le réseau PharmaBenin pour digitaliser votre inventaire et mieux servir vos patients.
+                </p>
+                <button class="bg-white text-blue-900 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors">
+                    S'inscrire comme pharmacie
+                </button>
+            </div>
+        </section>
+
+        <!-- Results Section (Hidden by default) -->
+        <section id="resultsSection" class="hidden container mx-auto px-4 py-8">
+            <div id="medicamentResults" class="mb-8"></div>
+            <div id="pharmacySection" class="hidden"></div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center text-sm text-gray-600">
+                <div class="mb-4 md:mb-0">
+                    <p>&copy; 2024 PharmaBenin - Système National de Gestion Pharmaceutique du Bénin</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="hover:text-blue-900 transition-colors">Mentions Légales</a>
+                    <a href="#" class="hover:text-blue-900 transition-colors">Contact</a>
+                    <a href="#" class="hover:text-blue-900 transition-colors">Aide</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disponibilités - PharmaBénin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #00b09b 0%, #96c93d 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <h1 class="text-2xl font-bold">
+                    <i class="fas fa-pills mr-2"></i>
+                    <span th:text="'Disponibilités de ' + ${medicament.nom}"></span>
+                </h1>
+                <a href="/admin/medicaments" class="mt-4 md:mt-0 text-white hover:opacity-80">
+                    <i class="fas fa-arrow-left mr-2"></i>Retour
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-10">
+        <!-- Infos du Médicament -->
+        <div class="bg-blue-50 border-l-4 border-blue-600 rounded-lg p-6 mb-10">
+            <h3 class="text-lg font-bold text-gray-800 mb-3">Informations du Médicament</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                <div>
+                    <p class="text-gray-600"><strong>Nom:</strong> <span th:text="${medicament.nom}"></span></p>
+                </div>
+                <div>
+                    <p class="text-gray-600"><strong>Principe Actif:</strong> <span th:text="${medicament.principeActif}"></span></p>
+                </div>
+                <div>
+                    <p class="text-gray-600"><strong>Dosage:</strong> <span th:text="${medicament.dosage}"></span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tableau des Disponibilités -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-gray-100 border-b">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Pharmacie</th>
+                            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Adresse</th>
+                            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Statut</th>
+                            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Quantité</th>
+                            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="dispo : ${disponibilites}" class="border-b hover:bg-gray-50 transition">
+                            <td class="px-6 py-3 text-sm font-semibold text-gray-800" th:text="${dispo.pharmacie.nom}"></td>
+                            <td class="px-6 py-3 text-sm text-gray-600" th:text="${dispo.pharmacie.adresse}"></td>
+                            <td class="px-6 py-3 text-sm">
+                                <span th:if="${dispo.disponible}" class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-semibold">
+                                    <i class="fas fa-check-circle mr-1"></i>Disponible
+                                </span>
+                                <span th:unless="${dispo.disponible}" class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-xs font-semibold">
+                                    <i class="fas fa-times-circle mr-1"></i>Rupture
+                                </span>
+                            </td>
+                            <td class="px-6 py-3 text-sm text-gray-700" th:text="${dispo.quantiteStock}"></td>
+                            <td class="px-6 py-3 text-sm space-x-2">
+                                <a th:href="@{/admin/medicaments/{medId}/disponibilites/{dispoId}/edit-form(medId=${medicament.id}, dispoId=${dispo.id})}"
+                                   class="inline-block bg-blue-50 text-blue-700 px-3 py-1 rounded hover:bg-blue-600 hover:text-white transition">
+                                    <i class="fas fa-edit"></i> Modifier
+                                </a>
+                            </td>
+                        </tr>
+                        <tr th:if="${disponibilites.isEmpty()}">
+                            <td colspan="5" class="px-6 py-10 text-center text-gray-500">
+                                <i class="fas fa-inbox text-3xl mb-2"></i>
+                                <p>Aucune disponibilité enregistrée. Veuillez créer une.</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Ajouter une Disponibilité -->
+        <div class="mt-10 bg-white rounded-xl shadow-md p-8">
+            <h3 class="text-xl font-bold text-gray-800 mb-6">Ajouter une Disponibilité</h3>
+            <form th:action="@{/admin/medicaments/{id}/disponibilites/add(id=${medicament.id})}" method="post" class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- Pharmacie -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">
+                            <i class="fas fa-hospital mr-2"></i>Pharmacie *
+                        </label>
+                        <select name="pharmacieId" required class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-green-500 focus:outline-none transition">
+                            <option value="">-- Sélectionnez une pharmacie --</option>
+                            <option th:each="pharma : ${pharmacies}" th:value="${pharma.id}" th:text="${pharma.nom}"></option>
+                        </select>
+                    </div>
+
+                    <!-- Quantité -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">
+                            <i class="fas fa-cubes mr-2"></i>Quantité *
+                        </label>
+                        <input type="number" name="quantite" id="addQuantiteInput" required min="0"
+                               class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-green-500 focus:outline-none transition"
+                               placeholder="Ex: 100" onchange="updateAddStatut()">
+                    </div>
+
+                    <!-- Disponible -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">
+                            <i class="fas fa-check-circle mr-2"></i>Statut
+                        </label>
+                        <select name="disponible" id="addDisponibeSelect" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-green-500 focus:outline-none transition">
+                            <option value="true" selected>Disponible</option>
+                            <option value="false">Rupture de Stock</option>
+                        </select>
+                        <p class="text-xs text-gray-500 mt-1">⚠️ Si quantité = 0, le statut sera forcé à "Rupture de Stock"</p>
+                    </div>
+                </div>
+
+                <!-- Submit -->
+                <div class="flex justify-end">
+                    <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-semibold transition">
+                        <i class="fas fa-plus mr-2"></i>Ajouter Disponibilité
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6 mt-20">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2026 PharmaBénin - Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script>
+        function updateAddStatut() {
+            const quantiteInput = document.getElementById('addQuantiteInput');
+            const disponibeSelect = document.getElementById('addDisponibeSelect');
+
+            // Si quantité = 0, forcer le statut à "Rupture de Stock"
+            if (parseInt(quantiteInput.value) === 0) {
+                disponibeSelect.value = 'false';
+                disponibeSelect.disabled = true;
+            } else {
+                disponibeSelect.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
+
+

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${medicament.id} ? 'Modifier Médicament' : 'Ajouter Médicament'">Médicament - PharmaBénin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #00b09b 0%, #96c93d 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <h1 class="text-2xl font-bold">
+                    <i class="fas fa-pills mr-2"></i>
+                    <span th:text="${medicament.id} ? 'Modifier Médicament' : 'Ajouter Médicament'"></span>
+                </h1>
+                <a href="/admin/medicaments" class="mt-4 md:mt-0 text-white hover:opacity-80">
+                    <i class="fas fa-arrow-left mr-2"></i>Retour
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-10">
+        <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-md p-8">
+            <form th:action="@{/admin/medicaments/save}" method="post" th:object="${medicament}" class="space-y-6">
+                <!-- ID (hidden) -->
+                <input type="hidden" th:field="*{id}">
+
+                <!-- Nom -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        <i class="fas fa-heading mr-2"></i>Nom du Médicament *
+                    </label>
+                    <input type="text" th:field="*{nom}" required
+                           class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-green-500 focus:outline-none transition"
+                           placeholder="Ex: Paracétamol">
+                </div>
+
+                <!-- Principe Actif -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        <i class="fas fa-flask mr-2"></i>Principe Actif *
+                    </label>
+                    <input type="text" th:field="*{principeActif}" required
+                           class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-green-500 focus:outline-none transition"
+                           placeholder="Ex: Paracétamol">
+                </div>
+
+                <!-- Forme -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        <i class="fas fa-cube mr-2"></i>Forme *
+                    </label>
+                    <select th:field="*{forme}" required class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-green-500 focus:outline-none transition">
+                        <option value="">-- Sélectionnez une forme --</option>
+                        <option value="Comprimé">Comprimé</option>
+                        <option value="Gélule">Gélule</option>
+                        <option value="Sirop">Sirop</option>
+                        <option value="Injection">Injection</option>
+                        <option value="Crème">Crème</option>
+                        <option value="Pommade">Pommade</option>
+                    </select>
+                </div>
+
+                <!-- Dosage -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        <i class="fas fa-weight mr-2"></i>Dosage *
+                    </label>
+                    <input type="text" th:field="*{dosage}" required
+                           class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-green-500 focus:outline-none transition"
+                           placeholder="Ex: 500mg">
+                </div>
+
+                <!-- Description -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        <i class="fas fa-info-circle mr-2"></i>Description
+                    </label>
+                    <textarea th:field="*{description}"
+                              class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-green-500 focus:outline-none transition"
+                              rows="4" placeholder="Description optionnelle"></textarea>
+                </div>
+
+                <!-- Buttons -->
+                <div class="flex justify-end space-x-4">
+                    <a href="/admin/medicaments" class="bg-gray-400 hover:bg-gray-500 text-white px-6 py-2 rounded-lg font-semibold transition">
+                        <i class="fas fa-times mr-2"></i>Annuler
+                    </a>
+                    <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-semibold transition">
+                        <i class="fas fa-save mr-2"></i>Sauvegarder
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6 mt-20">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2026 PharmaBénin - Tous droits réservés.</p>
+        </div>
+    </footer>
+</body>
+</html>
+
