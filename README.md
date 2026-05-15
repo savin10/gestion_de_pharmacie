@@ -6,7 +6,7 @@ Application web moderne pour localiser rapidement les médicaments disponibles d
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-green.svg)
 ![Java](https://img.shields.io/badge/Java-17-orange.svg)
 
-## 📋 Table des matières
+##  Table des matières
 
 - [Aperçu](#aperçu)
 - [Fonctionnalités](#fonctionnalités)
@@ -18,7 +18,7 @@ Application web moderne pour localiser rapidement les médicaments disponibles d
 - [Documentation](#documentation)
 - [Contribution](#contribution)
 
-## 🎯 Aperçu
+##  Aperçu
 
 PharmaBenin est une plateforme qui permet aux utilisateurs de :
 - Rechercher des médicaments par nom ou principe actif
@@ -41,7 +41,7 @@ PharmaBenin est une plateforme qui permet aux utilisateurs de :
 - Informations détaillées (stock, horaires, distance)
 - Badges de statut (En Stock / Stock Faible / 24h/24)
 
-## ✨ Fonctionnalités
+##  Fonctionnalités
 
 ### Pour les utilisateurs
 
@@ -60,7 +60,7 @@ PharmaBenin est une plateforme qui permet aux utilisateurs de :
 - ✅ Gestion des horaires
 - ✅ Dashboard administrateur
 
-## 🛠 Technologies
+##  Technologies
 
 ### Backend
 - **Java 17**
@@ -81,7 +81,7 @@ PharmaBenin est une plateforme qui permet aux utilisateurs de :
 - **Maven** - Gestion des dépendances
 - **Git** - Contrôle de version
 
-## 📦 Installation
+##  Installation
 
 ### Prérequis
 
@@ -128,7 +128,7 @@ Remplacer la clé API dans :
 http://localhost:8080
 ```
 
-## 🚀 Utilisation
+##  Utilisation
 
 ### Recherche de médicaments
 
@@ -167,7 +167,7 @@ L'application charge automatiquement des données de test au démarrage :
 - Username: `admin`
 - Password: `admin123`
 
-## 🏗 Architecture
+##  Architecture
 
 ### Structure du projet
 
@@ -218,7 +218,7 @@ Disponibilite
 └── quantiteStock (Integer)
 ```
 
-## 🔌 API
+##  API
 
 ### Endpoints publics
 
@@ -290,13 +290,13 @@ GET /api/pharmacies?lat={lat}&lon={lon}
 - `GET /admin/pharmacies` - Liste des pharmacies
 - `POST /admin/pharmacies` - Ajouter une pharmacie
 
-## 📚 Documentation
+##  Documentation
 
 - [IMPLEMENTATION_NOTES.md](IMPLEMENTATION_NOTES.md) - Notes d'implémentation détaillées
 - [GUIDE_TEST.md](GUIDE_TEST.md) - Guide de test complet
 - [ROADMAP.md](ROADMAP.md) - Feuille de route et fonctionnalités futures
 
-## 🧪 Tests
+##  Tests
 
 ### Lancer les tests
 ```bash
@@ -309,7 +309,7 @@ GET /api/pharmacies?lat={lat}&lon={lon}
 - Tests des contrôleurs REST
 - Tests de sécurité
 
-## 🤝 Contribution
+##  Contribution
 
 Les contributions sont les bienvenues ! Voici comment contribuer :
 
@@ -326,28 +326,28 @@ Les contributions sont les bienvenues ! Voici comment contribuer :
 - Mettre à jour la documentation
 - Respecter le style de code existant
 
-## 📝 Licence
+##  Licence
 
 Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
 
-## 👥 Auteurs
+##  Auteurs
 
 - **Équipe PharmaBenin** - *Développement initial*
 
-## 🙏 Remerciements
+##  Remerciements
 
 - Google Maps API pour la cartographie
 - Tailwind CSS pour le design
 - Font Awesome pour les icônes
 - Spring Boot pour le framework backend
 
-## 📞 Contact
+##  Contact
 
 - **Email** : contact@pharmabenin.com
 - **Site web** : https://pharmabenin.com
 - **Support** : support@pharmabenin.com
 
-## 🐛 Signaler un bug
+##  Signaler un bug
 
 Ouvrir une issue sur GitHub avec :
 - Description du bug
@@ -356,7 +356,7 @@ Ouvrir une issue sur GitHub avec :
 - Captures d'écran si applicable
 - Environnement (OS, navigateur, version)
 
-## 💡 Demander une fonctionnalité
+##  Demander une fonctionnalité
 
 Ouvrir une issue avec le label "enhancement" et décrire :
 - La fonctionnalité souhaitée
@@ -365,4 +365,4 @@ Ouvrir une issue avec le label "enhancement" et décrire :
 
 ---
 
-**Fait avec ❤️ au Bénin**
+
