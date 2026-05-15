@@ -94,8 +94,8 @@ PharmaBenin est une plateforme qui permet aux utilisateurs de :
 
 1. **Cloner le repository**
 ```bash
-git clone https://github.com/votre-repo/pharmabenin.git
-cd pharmabenin
+git clone https://github.com/savin10/gestion_de_pharmacie.git
+
 ```
 
 2. **Configurer la base de données**
